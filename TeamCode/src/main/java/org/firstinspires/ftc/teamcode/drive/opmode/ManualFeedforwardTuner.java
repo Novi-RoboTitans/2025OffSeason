@@ -10,6 +10,7 @@ import static org.firstinspires.ftc.teamcode.drive.DriveConstants.kV;
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
+import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.acmerobotics.roadrunner.drive.DriveSignal;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.kinematics.Kinematics;
@@ -85,6 +86,14 @@ public class ManualFeedforwardTuner extends LinearOpMode {
         telemetry.addLine("Ready!");
         telemetry.update();
         telemetry.clearAll();
+
+        TelemetryPacket packet = new TelemetryPacket();
+
+        packet.put("targetVelocity", 0);
+        packet.put("measuredVelocity", 0);
+        packet.put("error", 0);
+
+        FtcDashboard.getInstance().sendTelemetryPacket(packet);
 
         waitForStart();
 
