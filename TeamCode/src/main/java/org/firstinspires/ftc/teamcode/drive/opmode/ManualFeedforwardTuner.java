@@ -88,11 +88,9 @@ public class ManualFeedforwardTuner extends LinearOpMode {
         telemetry.clearAll();
 
         TelemetryPacket packet = new TelemetryPacket();
-
         packet.put("targetVelocity", 0);
         packet.put("measuredVelocity", 0);
         packet.put("error", 0);
-
         FtcDashboard.getInstance().sendTelemetryPacket(packet);
 
         waitForStart();
