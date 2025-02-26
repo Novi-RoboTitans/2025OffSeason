@@ -38,6 +38,10 @@ public class StandardTrackingWheelLocalizer extends ThreeTrackingWheelLocalizer 
 
     private List<Integer> lastEncPositions, lastEncVels;
 
+    public static double X_MULTIPLIER = 100 / 100.363333; // Multiplier in the X direction
+    public static double Y_MULTIPLIER = 100 / 100.1333333; // Multiplier in the Y direction
+
+
     public StandardTrackingWheelLocalizer(HardwareMap hardwareMap, List<Integer> lastTrackingEncPositions, List<Integer> lastTrackingEncVels) {
         super(Arrays.asList(
                 new Pose2d(0, LATERAL_DISTANCE / 2, 0), // left
@@ -48,13 +52,23 @@ public class StandardTrackingWheelLocalizer extends ThreeTrackingWheelLocalizer 
         lastEncPositions = lastTrackingEncPositions;
         lastEncVels = lastTrackingEncVels;
 
+<<<<<<< HEAD
         leftEncoder = new Encoder(hardwareMap.get(DcMotorEx.class, "RightRear"));
         rightEncoder = new Encoder(hardwareMap.get(DcMotorEx.class, "LeftRear"));
+=======
+        leftEncoder = new Encoder(hardwareMap.get(DcMotorEx.class, "rightRear"));
+        rightEncoder = new Encoder(hardwareMap.get(DcMotorEx.class, "leftRear"));
+>>>>>>> 9a5bbae9e6252e4f51eb793e433920345bdcc237
         frontEncoder = new Encoder(hardwareMap.get(DcMotorEx.class, "leftFront"));
 
         // TODO: reverse any encoders using Encoder.setDirection(Encoder.Direction.REVERSE)
         rightEncoder.setDirection(Encoder.Direction.REVERSE);
+<<<<<<< HEAD
             }
+=======
+        leftEncoder.setDirection(Encoder.Direction.REVERSE);
+    }
+>>>>>>> 9a5bbae9e6252e4f51eb793e433920345bdcc237
 
     public static double encoderTicksToInches(double ticks) {
         return WHEEL_RADIUS * 2 * Math.PI * GEAR_RATIO * ticks / TICKS_PER_REV;
@@ -73,9 +87,9 @@ public class StandardTrackingWheelLocalizer extends ThreeTrackingWheelLocalizer 
         lastEncPositions.add(frontPos);
 
         return Arrays.asList(
-                encoderTicksToInches(leftPos),
-                encoderTicksToInches(rightPos),
-                encoderTicksToInches(frontPos)
+            encoderTicksToInches(leftPos) * X_MULTIPLIER,
+            encoderTicksToInches(rightPos) * X_MULTIPLIER,
+            encoderTicksToInches(frontPos) * Y_MULTIPLIER
         );
     }
 
@@ -92,9 +106,9 @@ public class StandardTrackingWheelLocalizer extends ThreeTrackingWheelLocalizer 
         lastEncVels.add(frontVel);
 
         return Arrays.asList(
-                encoderTicksToInches(leftVel),
-                encoderTicksToInches(rightVel),
-                encoderTicksToInches(frontVel)
+            encoderTicksToInches(leftVel) * X_MULTIPLIER,
+            encoderTicksToInches(rightVel) * X_MULTIPLIER,
+            encoderTicksToInches(frontVel) * Y_MULTIPLIER
         );
     }
 }
